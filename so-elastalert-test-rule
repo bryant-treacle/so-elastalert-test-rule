@@ -30,7 +30,7 @@ fi
     echo "$elastalertrules"
     echo ""
     echo ""
-    echo "What rule you want want to test?"
+    echo "What rule do you want want to test?"
 
 	read rulename
 
