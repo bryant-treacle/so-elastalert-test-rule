@@ -37,11 +37,11 @@ fi
     echo "The results can be rather long.  Would you like to write the results to a file? (Y/N)"
 	read resultstolog
 
-	if [ "$resultstolog" = "Y" ] ; then
+	if [ ${resultstolog,,} = "y" ] ; then
 	    echo "Where do you want the file to be saved?"
 		read filesavelocation
 	    echo "Depending on the rule this may take a while."
 	    	sudo docker exec -it so-elastalert bash -c "elastalert-test-rule /etc/elastalert/rules/$rulename" > $filesavelocation/$rulename.results.txt	
-	elif [ "$resultstolog" = "N" ] ; then
+	elif [ ${resultstolog,,} = "n" ] ; then
 		sudo docker exec -it so-elastalert bash -c "elastalert-test-rule /etc/elastalert/rules/$rulename"
 	fi
