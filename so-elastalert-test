@@ -1,0 +1,43 @@
+#!/bin/bash -i
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+# Purpose:  This script will allow you to test your elastalert rule without entering the Docker container.
+
+if [[ $(/usr/bin/id -u) -ne 0 ]]; then
+    echo "This script must be run as root."
+    exit
+fi
+    echo ""
+    echo ""
+    echo "This script will allow you to test an elastalert rule."
+    echo ""
+    echo "Please enter the file path and rule name you want to test."
+    echo "Note: The file must be accessable by the elastalert docker container."
+
+	read -e rulename
+
+    echo "The results can be rather long.  Would you like to write the results to a file? (Y/N)"
+	read resultstolog
+
+	if [ ${resultstolog,,} = "y" ] ; then
+	    echo "Please enter the file path and file name."
+		read -e filesavelocation
+	    echo "Depending on the rule this may take a while."
+	    	sudo docker exec -it so-elastalert bash -c "elastalert-test-rule $rulename" > $filesavelocation
+
+	elif [ ${resultstolog,,} = "n" ] ; then
+		sudo docker exec -it so-elastalert bash -c "elastalert-test-rule $rulename"
+	fi
+    echo "Complete!"
