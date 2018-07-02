@@ -22,9 +22,9 @@ fi
     echo ""
     echo ""
     echo "This script will allow you to test an elastalert rule."
+    echo "Note: The rule must be accessable by the elastalert docker container."
     echo ""
     echo "Please enter the file path and rule name you want to test."
-    echo "Note: The file must be accessable by the elastalert docker container."
 
 	read -e rulename
 
